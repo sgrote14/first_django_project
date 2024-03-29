@@ -27,11 +27,11 @@ def results(request, question_id):
     question = Question.objects.get(pk=question_id)
     vote_results = Choice.objects.filter(question_id=question_id)
     context = {"question": question, "vote_results": vote_results}
-    print(question.question_text)
     return render(request, "polls/results.html", context)
 
 
 def vote(request, question_id):
+    print(request.POST)
     # I have the choice ID (from request object) and the question ID
     # I need to update the votes field of the choice object selected (add 1)
     selected_choice = Choice.objects.get(pk=request.POST['choice'])

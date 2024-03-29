@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Poll</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body style="margin: 20px">
@@ -12,7 +12,7 @@
         {% if choices %}
             {% for choice in choices %}
                 <input type="radio" id="{{choice.id}}" name="choice" value="{{choice.id}}">
-                <label for="option1">{{choice.choice_text}}</label><br>
+                <label for={{choice.id}}>{{choice.choice_text}}</label><br>
             {% endfor %}
             <input type="submit">
         {% else %}
