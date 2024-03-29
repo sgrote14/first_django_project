@@ -1,5 +1,7 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from django.urls import reverse
+
 from .models import Question, Choice
 
 
@@ -22,10 +24,18 @@ def detail(request, question_id):
 
 
 def results(request, question_id):
-    # response = "You're looking at the results of question %s."
-    result = Choice.objects.filter(question_id=question_id).first()
-    return HttpResponse(result.choice_text)
+    question = Question.objects.get(pk=question_id)
+    vote_results = Choice.objects.filter(question_id=question_id)
+    context = {"question": question, "vote_results": vote_results}
+    print(question.question_text)
+    return render(request, "polls/results.html", context)
 
 
 def vote(request, question_id):
-    return HttpResponse("You're voting on question %s." % question_id)
+    # I have the choice ID (from request object) and the question ID
+    # I need to update the votes field of the choice object selected (add 1)
+    selected_choice = Choice.objects.get(pk=request.POST['choice'])
+    current_votes = selected_choice.votes
+    selected_choice.votes = current_votes + 1
+    selected_choice.save()
+    return HttpResponseRedirect(reverse("polls:results", args=(question_id,)))

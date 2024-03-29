@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vote Results</title>
+</head>
+<body>
+  <h1>Vote Results</h1>
+  <h2>{{question.question_text}}</h2>
+  {% if vote_results %}
+    <table style="border-collapse: collapse;">
+        <tr style="background-color: #f2f2f1;">
+          <th style="border: 1px solid #dddddd; text-align: left; padding: 8px">Choice</th>
+          <th style="border: 1px solid #dddddd; text-align: left; padding: 8px">Votes</th>
+        </tr>
+        {% for result in vote_results %}
+          <tr>
+            <td style="border: 1px solid #dddddd; text-align: left; padding: 8px">{{result.choice_text}}</td>
+            <td style="border: 1px solid #dddddd; text-align: left; padding: 8px">{{result.votes}}</td>
+          </tr>
+        {% endfor %}
+    </table>
+  {% else %}
+    <p>No Results</p>
+  {% endif %}
+</body>
+</html>

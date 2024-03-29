@@ -7,9 +7,17 @@
 </head>
 <body style="margin: 20px">
     <h1>{{question}}</h1>
-    {% for choice in choices %}
-    <input type="radio" id={{choice.id}} name="choices">
-    <label for="option1">{{choice.choice_text}}</label><br>
-    {% endfor %}
+    <form action="{% url 'polls:vote' question.id %}" method="post">
+        {% csrf_token %}
+        {% if choices %}
+            {% for choice in choices %}
+                <input type="radio" id="{{choice.id}}" name="choice" value="{{choice.id}}">
+                <label for="option1">{{choice.choice_text}}</label><br>
+            {% endfor %}
+            <input type="submit">
+        {% else %}
+            <p>No choices are available</p>
+        {% endif %}
+    </form>
 </body>
 </html>
